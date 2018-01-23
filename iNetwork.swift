@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Network: CustomStringConvertible {
+public class iNetwork: CustomStringConvertible {
     
     // MARK: - Network Sesssion Info
     
@@ -25,8 +25,8 @@ public class Network: CustomStringConvertible {
     // MARK: - URL Session
     
     public var session: URLSession?
-    public var current: Network.Task!
-    private let session_delegate: NetworkSession = NetworkSession()
+    public var current: iNetwork.Task!
+    private let session_delegate: iNetworkSession = iNetworkSession()
     
     // MARK: - Queue
     
@@ -50,7 +50,7 @@ public class Network: CustomStringConvertible {
     
     // MARK: - Tasks
     
-    public var tasks: [Network.Task] = []
+    public var tasks: [iNetwork.Task] = []
     
     /** The tasks loop */
     fileprivate func loop() {
@@ -78,7 +78,7 @@ public class Network: CustomStringConvertible {
     }
     
     /** push a task into network tasks, at is the index, default nil, in the last. */
-    public func push(task: Network.Task, at: Int? = nil) {
+    public func push(task: iNetwork.Task, at: Int? = nil) {
         queue.addOperation {
             if let index = at {
                 if index < self.tasks.count {
@@ -143,11 +143,11 @@ public class Network: CustomStringConvertible {
 
 // MARK: - URL Session Delegate
 
-fileprivate class NetworkSession: NSObject {
-    weak var network: Network?
+fileprivate class iNetworkSession: NSObject {
+    weak var network: iNetwork?
 }
 
-extension NetworkSession: URLSessionTaskDelegate {
+extension iNetworkSession: URLSessionTaskDelegate {
     
     /** Recevie complete */
     public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
@@ -162,7 +162,7 @@ extension NetworkSession: URLSessionTaskDelegate {
     }
     
 }
-extension NetworkSession: URLSessionDataDelegate {
+extension iNetworkSession: URLSessionDataDelegate {
     
     /** Receive the response */
     public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Swift.Void) {

@@ -8,9 +8,9 @@
 
 import Foundation
 
-extension Network {
+extension iNetwork {
     
-    public class EasyTask: Network.Task {
+    public class EasyTask: iNetwork.Task {
         
         // MARK: - Override: Api
         
@@ -69,9 +69,9 @@ extension Network {
         
         var black_queue: DispatchQueue?
         
-        var urlSession_receive_response_block: ((Network.EasyTask) -> Void)?
-        var urlSession_receive_data_block: ((Network.EasyTask) -> Void)?
-        var urlSession_receive_complete_block: ((Network.EasyTask, Error?) -> Void)?
+        var urlSession_receive_response_block: ((iNetwork.EasyTask) -> Void)?
+        var urlSession_receive_data_block: ((iNetwork.EasyTask) -> Void)?
+        var urlSession_receive_complete_block: ((iNetwork.EasyTask, Error?) -> Void)?
         
         public override func urlSession_receive_response() {
             if urlSession_receive_response_block != nil {
@@ -120,9 +120,9 @@ extension Network {
              body: Data?,
              time_out: TimeInterval,
              cache_policy: URLRequest.CachePolicy,
-             response: ((Network.EasyTask) -> Void)?,
-             data: ((Network.EasyTask) -> Void)?,
-             complete: ((Network.EasyTask, Error?) -> Void)?
+             response: ((iNetwork.EasyTask) -> Void)?,
+             data: ((iNetwork.EasyTask) -> Void)?,
+             complete: ((iNetwork.EasyTask, Error?) -> Void)?
             ) {
             super.init()
             self.api = api
@@ -137,16 +137,16 @@ extension Network {
             self.urlSession_receive_complete_block = complete
         }
         
-        convenience init(url: URL?, complete: ((Network.EasyTask, Error?) -> Void)?) {
+        convenience init(url: URL?, complete: ((iNetwork.EasyTask, Error?) -> Void)?) {
             self.init(api: url?.absoluteString ?? "", url: url, method: "GET", header: nil, body: nil, time_out: 8, cache_policy: .reloadIgnoringLocalCacheData, response: nil, data: nil, complete: complete)
         }
         
-        public class func get(url: URL?, header: [String: String]? = nil, complete: ((Network.EasyTask, Error?) -> Void)?) -> Network.EasyTask {
-            return Network.EasyTask(api: url?.absoluteString ?? "", url: url, method: "GET", header: header, body: nil, time_out: 8, cache_policy: .reloadIgnoringLocalCacheData, response: nil, data: nil, complete: complete)
+        public class func get(url: URL?, header: [String: String]? = nil, complete: ((iNetwork.EasyTask, Error?) -> Void)?) -> iNetwork.EasyTask {
+            return iNetwork.EasyTask(api: url?.absoluteString ?? "", url: url, method: "GET", header: header, body: nil, time_out: 8, cache_policy: .reloadIgnoringLocalCacheData, response: nil, data: nil, complete: complete)
         }
         
-        public class func post(url: URL?, header: [String: String]? = nil, body: Data?, complete: ((Network.EasyTask, Error?) -> Void)?) -> Network.EasyTask {
-            return Network.EasyTask(api: url?.absoluteString ?? "", url: url, method: "POST", header: header, body: body, time_out: 8, cache_policy: .reloadIgnoringLocalCacheData, response: nil, data: nil, complete: complete)
+        public class func post(url: URL?, header: [String: String]? = nil, body: Data?, complete: ((iNetwork.EasyTask, Error?) -> Void)?) -> iNetwork.EasyTask {
+            return iNetwork.EasyTask(api: url?.absoluteString ?? "", url: url, method: "POST", header: header, body: body, time_out: 8, cache_policy: .reloadIgnoringLocalCacheData, response: nil, data: nil, complete: complete)
         }
         
         
@@ -154,18 +154,18 @@ extension Network {
     
 }
 
-extension Network {
+extension iNetwork {
     
     @discardableResult
-    func get(url: URL?, header: [String: String]? = nil, complete: ((Network.EasyTask, Error?) -> Void)?) -> Network.EasyTask {
-        let task = Network.EasyTask.get(url: url, header: header, complete: complete)
+    func get(url: URL?, header: [String: String]? = nil, complete: ((iNetwork.EasyTask, Error?) -> Void)?) -> iNetwork.EasyTask {
+        let task = iNetwork.EasyTask.get(url: url, header: header, complete: complete)
         self.push(task: task)
         return task
     }
     
     @discardableResult
-    func post(url: URL?, header: [String: String]? = nil, body: Data?, complete: ((Network.EasyTask, Error?) -> Void)?) -> Network.EasyTask {
-        let task = Network.EasyTask.post(url: url, header: header, body: body, complete: complete)
+    func post(url: URL?, header: [String: String]? = nil, body: Data?, complete: ((iNetwork.EasyTask, Error?) -> Void)?) -> iNetwork.EasyTask {
+        let task = iNetwork.EasyTask.post(url: url, header: header, body: body, complete: complete)
         self.push(task: task)
         return task
     }

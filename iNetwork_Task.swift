@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Network {
+extension iNetwork {
     
     public class Task {
         
